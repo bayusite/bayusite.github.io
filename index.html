@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Muhamad Bayu Krisnahadi | Data Science & Operations</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#151618',
+                            darker: '#0a0a0c',
+                            light: '#fbfbfb',
+                            mid: '#f4f2eb',
+                            accent: '#40eb98', // Neon green/teal
+                            accent2: '#f9dc54', // Yellow
+                            accent3: '#65CBF1', // Light blue
+                            text: '#ffffff',
+                            textMuted: '#bfbfbf'
+                        }
+                    },
+                    boxShadow: {
+                        'neon': '0 0 20px rgba(64, 235, 152, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- GSAP for advanced animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Swiper JS for 3D Coverflow Carousel -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <style>
+        /* Base Styles & Resets */
+        body {
+            background-color: #151618;
+            color: #ffffff;
+            overflow-x: hidden; /* Mencegah horizontal scroll */
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography Embellishments */
+        .text-gradient {
+            background: linear-gradient(to right, #40eb98, #65CBF1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .heading-xl {
+            font-size: clamp(32px, 6vw, 80px); /* Disesuaikan untuk HP kecil */
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .heading-lg {
+            font-size: clamp(28px, 4vw, 56px);
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #151618; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #40eb98; }
+
+        /* UI Components */
+        .btn-primary {
+            background-color: #40eb98;
+            color: #151618;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.69, 0, 0.04, 1.01);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; bottom: 0; width: 0;
+            background-color: #ffffff;
+            z-index: -1;
+            transition: width 0.3s cubic-bezier(0.69, 0, 0.04, 1.01);
+        }
+        .btn-primary:hover { color: #151618; }
+        .btn-primary:hover::before { width: 100%; }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            border-color: #40eb98;
+            color: #40eb98;
+            background-color: rgba(64, 235, 152, 0.05);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        @media (min-width: 768px) {
+            .badge { font-size: 0.875rem; }
+        }
+        .badge-accent { background-color: rgba(64, 235, 152, 0.15); color: #40eb98; }
+        .badge-accent2 { background-color: rgba(249, 220, 84, 0.15); color: #f9dc54; }
+        .badge-accent3 { background-color: rgba(101, 203, 241, 0.15); color: #65CBF1; }
+
+        /* Section Shapes & Backgrounds */
+        .section-curve {
+            border-top-left-radius: 2rem;
+            border-top-right-radius: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        .overlap-up {
+            margin-top: -2rem;
+        }
+        @media (min-width: 768px) {
+            .section-curve { border-top-left-radius: 5rem; border-top-right-radius: 5rem; }
+            .overlap-up { margin-top: -5rem; }
+        }
+
+        /* Concave Section Curve */
+        .section-concave { position: relative; }
+        .section-concave::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 100%; /* Mengganti 100vw untuk mencegah overflow */
+            height: 40px;
+            background-color: #F4F2EB;
+            border-bottom-left-radius: 50% 100%;
+            border-bottom-right-radius: 50% 100%;
+            z-index: 1;
+        }
+        @media (min-width: 768px) {
+            .section-concave::before { height: 100px; }
+        }
+
+        /* Arch Curve for Footer */
+        .section-arch-bottom { position: relative; }
+        .section-arch-bottom::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; 
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background-color: #FAFAFA; 
+            border-top-left-radius: 50% 100%;
+            border-top-right-radius: 50% 100%;
+            z-index: 10;
+            pointer-events: none;
+        }
+        @media (min-width: 768px) {
+            .section-arch-bottom::after { height: 120px; }
+        }
+
+        /* Navigation */
+        .navbar { transition: all 0.3s ease; }
+        .navbar.scrolled {
+            background: rgba(21, 22, 24, 0.95);
+            backdrop-filter: blur(10px);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Interactive Elements */
+        .hover-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .hover-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(64, 235, 152, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(64, 235, 152, 0.1);
+        }
+
+        /* Grid Layouts */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Animations */
+        .gs-reveal { opacity: 0; visibility: hidden; }
+        
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            width: 100%; /* Fix horizontal overflow mobile */
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Floating elements */
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        /* --- SWIPER & 3D PORTFOLIO FIXES --- */
+        .swiper {
+            width: 100%;
+            padding-top: 20px;
+            padding-bottom: 50px;
+            overflow: visible; 
+        }
+        
+        /* Lebar Slide Presisi */
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 85vw; /* Mobile */
+            height: auto;
+        }
+        @media (min-width: 768px) {
+            .swiper-slide { width: 50vw; /* Tablet */ }
+        }
+        @media (min-width: 1024px) {
+            .swiper-slide { width: 32vw; /* Desktop */ }
+        }
+        
+        .swiper-button-next, .swiper-button-prev {
+            color: #40eb98;
+            background: rgba(21, 22, 24, 0.9);
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(64,235,152,0.5);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(64,235,152,0.15);
+            transition: all 0.3s;
+        }
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            background: #40eb98;
+            color: #151618;
+            transform: scale(1.1);
+        }
+        .swiper-button-next::after, .swiper-button-prev::after {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        @media (min-width: 1024px) {
+            .swiper-button-next, .swiper-button-prev {
+                width: 64px; height: 64px;
+            }
+            .swiper-button-next::after, .swiper-button-prev::after {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* 3D CUBE STYLING (Fixed for Mobile & Desktop) */
+        .portfolio-card {
+            perspective: 2000px;
+            height: 420px; /* Tinggi Fix agar translasi 3D presisi */
+        }
+        @media (min-width: 768px) {
+            .portfolio-card { height: 480px; }
+        }
+        @media (min-width: 1024px) {
+            .portfolio-card { height: 560px; }
+        }
+
+        .portfolio-card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        
+        .card-face {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 2rem;
+            backface-visibility: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: #151618;
+            overflow: hidden;
+        }
+
+        .card-face-front {
+            transform: translateZ(20px); 
+            padding: 1.25rem;
+        }
+        @media (min-width: 768px) { .card-face-front { padding: 2rem; border-radius: 2.5rem; } }
+        @media (min-width: 1024px) { .card-face-front { padding: 2.5rem; } }
+
+        .card-face-back {
+            transform: rotateY(180deg) translateZ(20px);
+            background-color: #1a1b1d;
+            display: flex;
+            align-items: center; justify-content: center;
+            flex-direction: column; text-align: center;
+            padding: 1.5rem;
+        }
+        .card-face-back::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(64,235,152,0.1), transparent);
+            opacity: 0.5; pointer-events: none;
+        }
+
+        /* Sisi Kanan/Kiri (Menyesuaikan lebar layar vw) */
+        .card-face-right, .card-face-left {
+            width: 40px; height: 100%;
+            left: 50%; margin-left: -20px;
+            background-color: #0f1012;
+            border-radius: 0;
+        }
+        .card-face-right { transform: rotateY(90deg) translateZ(42.5vw); } /* Setengah dari 85vw */
+        .card-face-left { transform: rotateY(-90deg) translateZ(42.5vw); }
+        
+        /* Sisi Atas/Bawah (Menyesuaikan tinggi card px) */
+        .card-face-top, .card-face-bottom {
+            width: 100%; height: 40px;
+            top: 50%; margin-top: -20px;
+            background-color: #0f1012;
+            border-radius: 0;
+        }
+        .card-face-top { transform: rotateX(90deg) translateZ(210px); } /* Setengah dari 420px */
+        .card-face-bottom { transform: rotateX(-90deg) translateZ(210px); }
+
+        /* Responsive overrides untuk sisi 3D */
+        @media (min-width: 768px) {
+            .card-face-right { transform: rotateY(90deg) translateZ(25vw); } /* Setengah 50vw */
+            .card-face-left { transform: rotateY(-90deg) translateZ(25vw); }
+            .card-face-top { transform: rotateX(90deg) translateZ(240px); }  /* Setengah 480px */
+            .card-face-bottom { transform: rotateX(-90deg) translateZ(240px); }
+            .card-face { border-radius: 2.5rem; }
+        }
+        @media (min-width: 1024px) {
+            .card-face-right { transform: rotateY(90deg) translateZ(16vw); } /* Setengah 32vw */
+            .card-face-left { transform: rotateY(-90deg) translateZ(16vw); }
+            .card-face-top { transform: rotateX(90deg) translateZ(280px); }  /* Setengah 560px */
+            .card-face-bottom { transform: rotateX(-90deg) translateZ(280px); }
+        }
+
+        .card-face-front > div {
+            transform: translateZ(30px);
+            transition: transform 0.3s ease;
+        }
+        .portfolio-card-inner:hover .card-face-front > div {
+             transform: translateZ(40px);
+        }
+
+        /* 3D Avatar Float & Shine Effect */
+        @keyframes float-3d {
+            0% { transform: translateY(0px) scale(1) rotateX(5deg) rotateY(-5deg); box-shadow: 0 5px 15px rgba(64, 235, 152, 0.2), 0 0 0 0 rgba(64, 235, 152, 0.4); }
+            50% { transform: translateY(-12px) scale(1.05) rotateX(-5deg) rotateY(5deg); box-shadow: 0 15px 25px rgba(64, 235, 152, 0.5), 0 0 20px 5px rgba(64, 235, 152, 0.2); }
+            100% { transform: translateY(0px) scale(1) rotateX(5deg) rotateY(-5deg); box-shadow: 0 5px 15px rgba(64, 235, 152, 0.2), 0 0 0 0 rgba(64, 235, 152, 0); }
+        }
+        .avatar-3d {
+            animation: float-3d 4s ease-in-out infinite;
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+        }
+        .avatar-3d:hover {
+            animation-play-state: paused;
+            transform: scale(1.15) translateZ(20px);
+            box-shadow: 0 0 30px rgba(64, 235, 152, 0.8);
+            border-color: #ffffff;
+            cursor: pointer;
+        }
+        @keyframes shine {
+            100% { transform: translateX(100%); }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-accent selection:text-brand-dark">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar fixed w-full z-50 top-0 py-4 lg:py-6 px-6 lg:px-12 flex justify-between items-center">
+        <a href="#home" class="text-2xl font-bold tracking-tighter text-white z-50" onclick="window.scrollTo(0,0); return false;">
+            Bayu<span class="text-brand-accent">.</span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center space-x-8">
+            <a href="#about" class="text-sm font-medium text-white hover:text-brand-accent transition-colors">Strategy</a>
+            <a href="#skills" class="text-sm font-medium text-white hover:text-brand-accent transition-colors">Capabilities</a>
+            <a href="#experience" class="text-sm font-medium text-white hover:text-brand-accent transition-colors">Experience</a>
+            <a href="#portfolio" class="text-sm font-medium text-white hover:text-brand-accent transition-colors">Portfolio</a>
+            <a href="#contact" class="btn-primary text-sm py-2 px-6">Let's Talk</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden text-white z-50 focus:outline-none">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-brand-darker z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300">
+            <a href="#about" class="mobile-link text-3xl font-bold mb-8 hover:text-brand-accent">Strategy</a>
+            <a href="#skills" class="mobile-link text-3xl font-bold mb-8 hover:text-brand-accent">Capabilities</a>
+            <a href="#experience" class="mobile-link text-3xl font-bold mb-8 hover:text-brand-accent">Experience</a>
+            <a href="#portfolio" class="mobile-link text-3xl font-bold mb-8 hover:text-brand-accent">Portfolio</a>
+            <a href="#contact" class="mobile-link btn-primary text-xl mt-4">Let's Talk</a>
+        </div>
+    </nav>
+
+    <!-- FIXED HERO SECTION -->
+    <section id="home" class="relative lg:fixed top-0 left-0 w-full min-h-[100dvh] flex items-center pt-24 lg:pt-32 pb-16 lg:pb-20 px-6 lg:px-12 overflow-hidden z-0 bg-brand-dark">
+        <!-- Background Blobs -->
+        <div class="blob bg-brand-accent/20 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full top-0 left-[-100px]"></div>
+        <div class="blob bg-brand-accent3/20 w-[250px] md:w-[400px] h-[250px] md:h-[400px] rounded-full bottom-0 right-[-50px]"></div>
+
+        <div class="max-w-7xl mx-auto w-full relative z-10">
+            <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
+                
+                <!-- Text Content -->
+                <div class="w-full lg:w-3/5 text-center lg:text-left mt-8 lg:mt-0">
+                    <div class="badge badge-accent mb-4 lg:mb-6 inline-flex gs-reveal">Data Science & Operations</div>
+                    <h1 class="heading-xl font-bold mb-4 lg:mb-6 text-white gs-reveal">
+                        Turning complex data into <br class="hidden lg:block"/>
+                        <span class="text-brand-accent relative inline-block">
+                            clearer decisions.
+                            <svg class="absolute -bottom-1 lg:-bottom-2 left-0 w-full h-2 lg:h-3 text-brand-accent/30" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="4" fill="transparent"/>
+                            </svg>
+                        </span>
+                    </h1>
+                    <p class="text-base sm:text-xl text-brand-textMuted mb-5 lg:mb-5 max-w-2xl mx-auto lg:mx-0 gs-reveal">
+                        I am Muhamad Bayu Krisnahadi. I help businesses streamline operations and uncover actionable insights from large-scale datasets, bridging the gap between data and strategy.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start gs-reveal">
+                        <a href="#contact" class="btn-primary">Discuss a project</a>
+                        <a href="#experience" class="btn-outline">View my journey</a>
+                    </div>
+                </div>
+
+                <!-- Hero Graphic/Stats -->
+                <div class="w-full lg:w-2/5 relative gs-reveal">
+                    <!-- Area utama diperbesar agar lingkarannya bisa lebih besar -->
+                    <div class="relative w-full aspect-square max-w-[320px] sm:max-w-[450px] lg:max-w-[550px] mx-auto">
+                        <!-- Abstract Data Shape -->
+                        <div class="absolute inset-0 border border-brand-textMuted/20 rounded-full animate-[spin_20s_linear_infinite]"></div>
+                        <div class="absolute inset-4 border border-brand-accent/30 rounded-full border-dashed animate-[spin_15s_linear_infinite_reverse]"></div>
+                        
+                        <!-- Center Content -->
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4 lg:p-8 bg-brand-darker/50 backdrop-blur-sm rounded-full m-4 lg:m-8 border border-white/5">
+                            
+                            <!-- Media Container (Gabungan Foto & Video) -->
+                            <!-- Background dikembalikan ke gelap, karena foto akan full menutupi lingkaran -->
+                            <div class="avatar-3d group relative w-44 h-44 sm:w-52 sm:h-52 lg:w-[260px] lg:h-[260px] rounded-full mb-3 lg:mb-4 border-2 lg:border-4 border-brand-accent shadow-neon overflow-hidden cursor-pointer bg-brand-dark">
+                                <!-- Video Animasi -->
+                                <video src="animasi_bayu.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover object-[55%_10%]"></video>
+                                
+                                <!-- Foto (Posisi di depan) -->
+                                <!-- object-[10%_3%] aman untuk rambut, scale-[6] zoom-out tipis dari sebelumnya, -translate-x-[4px] tarikan halus ke kiri agar pas tengah -->
+                                <img src="Foto AI uyab.png" alt="Profile Bayu" class="absolute inset-0 w-full h-full object-cover object-[90%_25%] scale-[1] -translate-x-[1px] transition-opacity duration-500 group-hover:opacity-0 z-10">
+                            </div>
+                            
+                            <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-0.5 sm:mb-1">4+ Years</h3>
+                            <p class="text-[10px] sm:text-xs lg:text-sm text-brand-textMuted uppercase tracking-wider">Experience</p>
+                        </div>
+
+                        <!-- Floating Stat Badges (Adjusted for mobile) -->
+                        <div class="absolute top-0 sm:top-10 left-0 sm:-left-4 z-20 scale-85 sm:scale-100 origin-top-left bg-brand-dark border border-white/10 p-3 sm:p-4 rounded-xl shadow-xl hover-card">
+                            <div class="text-brand-accent text-lg sm:text-xl mb-1"><i class="fa-solid fa-bolt"></i></div>
+                            <div class="font-bold text-sm sm:text-base">80%</div>
+                            <div class="text-[10px] sm:text-xs text-brand-textMuted whitespace-nowrap">Efficiency Gain</div>
+                        </div>
+                        <div class="absolute bottom-4 sm:bottom-20 right-0 sm:-right-4 z-20 scale-85 sm:scale-100 origin-bottom-right bg-brand-dark border border-white/10 p-3 sm:p-4 rounded-xl shadow-xl hover-card">
+                            <div class="text-brand-accent3 text-lg sm:text-xl mb-1"><i class="fa-solid fa-bullseye"></i></div>
+                            <div class="font-bold text-sm sm:text-base">99%</div>
+                            <div class="text-[10px] sm:text-xs text-brand-textMuted whitespace-nowrap">Data Accuracy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENT WRAPPER -->
+    <main class="content-wrapper relative z-10 mt-0 lg:mt-[100dvh]">
+        
+        <!-- Signpost / Strategy Section -->
+        <section class="bg-brand-accent text-brand-dark py-16 lg:py-20 px-6 lg:px-12 section-curve shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
+            <div class="max-w-5xl mx-auto text-center">
+                <h2 class="heading-lg font-bold mb-4 lg:mb-6 gs-reveal">
+                    Raw data doesn't solve problems.<br/>
+                    <span class="text-brand-darker">Strategic analysis does.</span>
+                </h2>
+                <p class="text-lg lg:text-xl font-medium mb-0 opacity-80 max-w-3xl mx-auto gs-reveal">
+                    I combine analytical rigor from my Marine Science background with practical operational expertise to optimize workflows, build automated reports, and drive growth.
+                </p>
+            </div>
+        </section>
+
+        <!-- About / Pain Points Section -->
+        <section id="about" class="bg-brand-mid text-brand-dark py-20 lg:py-24 px-6 lg:px-12 section-curve overlap-up relative overflow-hidden">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+                    
+                    <div class="gs-reveal">
+                        <div class="badge mb-4 border border-[#D4AF37]/50 bg-[#C85A17]/15 text-[#D4AF37] shadow-[0_0_15px_rgba(212,175,55,0.15)] relative overflow-hidden group">
+                            <div class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#D4AF37]/40 to-transparent group-hover:animate-[shine_1.5s_ease-in-out_infinite]"></div>
+                            Target Role & Focus
+                        </div>
+                        <h2 class="heading-lg font-bold mb-6">From operational bottlenecks to scalable systems.</h2>
+                        <div class="space-y-4 lg:space-y-6 text-base lg:text-lg opacity-90">
+                            <p>With experience managing over 10,000+ monthly records, I've seen firsthand how messy data hinders business growth.</p>
+                            <p>Currently advancing my skills in <strong>Machine Learning and Python</strong>, my goal is to transition fully into a Data Scientist or Advanced Data Analyst role.</p>
+                            
+                            <div class="mt-8 p-5 lg:p-6 bg-white rounded-2xl shadow-sm border border-black/5">
+                                <h4 class="font-bold text-lg lg:text-xl mb-3 flex items-center gap-2">
+                                    <i class="fa-solid fa-crosshairs text-brand-accent2"></i> Core Objectives
+                                </h4>
+                                <ul class="space-y-2 lg:space-y-3">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-check mt-1 text-brand-accent2"></i>
+                                        <span class="text-sm lg:text-base">Build predictive models to forecast trends.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-check mt-1 text-brand-accent2"></i>
+                                        <span class="text-sm lg:text-base">Design intuitive dashboards for stakeholders.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-check mt-1 text-brand-accent2"></i>
+                                        <span class="text-sm lg:text-base">Automate redundant data processing tasks.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 gs-reveal">
+                        <div class="bg-white p-5 lg:p-6 rounded-2xl shadow-sm border border-black/5 hover:-translate-y-1 transition-transform">
+                            <div class="w-10 h-10 lg:w-12 lg:h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3 lg:mb-4 text-xl lg:text-2xl">🔍</div>
+                            <h4 class="font-bold text-lg lg:text-xl mb-2">Identify</h4>
+                            <p class="text-sm opacity-80">Finding bottlenecks in current operational workflows and reporting.</p>
+                        </div>
+                        <div class="bg-white p-5 lg:p-6 rounded-2xl shadow-sm border border-black/5 hover:-translate-y-1 transition-transform mt-0 sm:mt-8">
+                            <div class="w-10 h-10 lg:w-12 lg:h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3 lg:mb-4 text-xl lg:text-2xl">🧹</div>
+                            <h4 class="font-bold text-lg lg:text-xl mb-2">Cleanse</h4>
+                            <p class="text-sm opacity-80">Rigorous data validation ensuring up to 99% accuracy for analysis.</p>
+                        </div>
+                        <div class="bg-white p-5 lg:p-6 rounded-2xl shadow-sm border border-black/5 hover:-translate-y-1 transition-transform">
+                            <div class="w-10 h-10 lg:w-12 lg:h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3 lg:mb-4 text-xl lg:text-2xl">⚙️</div>
+                            <h4 class="font-bold text-lg lg:text-xl mb-2">Optimize</h4>
+                            <p class="text-sm opacity-80">Developing automated solutions that improve efficiency by 80%.</p>
+                        </div>
+                        <div class="bg-brand-dark text-white p-5 lg:p-6 rounded-2xl shadow-xl hover:-translate-y-1 transition-transform mt-0 sm:mt-8">
+                            <div class="w-10 h-10 lg:w-12 lg:h-12 bg-brand-accent/20 text-brand-accent rounded-full flex items-center justify-center mb-3 lg:mb-4 text-xl lg:text-2xl">📈</div>
+                            <h4 class="font-bold text-lg lg:text-xl mb-2">Impact</h4>
+                            <p class="text-sm text-gray-300">Actionable insights that drive Sales, Marketing, and Product strategy.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Marquee Divider -->
+        <div class="bg-brand-darker py-3 lg:py-4 border-y border-white/5 w-full">
+            <div class="marquee-container">
+                <div class="marquee-content text-brand-accent font-bold text-lg lg:text-2xl tracking-widest uppercase opacity-80">
+                    <span class="mx-3 lg:mx-4">Data Analysis</span> • <span class="mx-3 lg:mx-4">Python</span> • <span class="mx-3 lg:mx-4">SQL</span> • <span class="mx-3 lg:mx-4">Machine Learning</span> • <span class="mx-3 lg:mx-4">Tableau</span> • <span class="mx-3 lg:mx-4">Advanced Excel</span> • <span class="mx-3 lg:mx-4">Data Visualization</span> • <span class="mx-3 lg:mx-4">Data Analysis</span> • <span class="mx-3 lg:mx-4">Python</span> • <span class="mx-3 lg:mx-4">SQL</span> • <span class="mx-3 lg:mx-4">Machine Learning</span> • <span class="mx-3 lg:mx-4">Tableau</span> • <span class="mx-3 lg:mx-4">Advanced Excel</span> • <span class="mx-3 lg:mx-4">Data Visualization</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 lg:py-24 px-6 lg:px-12 bg-brand-dark section-curve overlap-up relative w-full">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12 lg:mb-16 gs-reveal">
+                    <h2 class="heading-lg font-bold mb-4">Core Competencies</h2>
+                    <p class="text-lg lg:text-xl text-brand-textMuted max-w-2xl mx-auto">The tools and methodologies I use to bring order to chaos.</p>
+                </div>
+
+                <div class="bento-grid">
+                    <!-- Skill Area 1 -->
+                    <div class="bg-brand-darker border border-white/5 p-6 lg:p-8 rounded-3xl hover-card gs-reveal">
+                        <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent text-xl lg:text-2xl mb-5 lg:mb-6">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                        <h3 class="text-xl lg:text-2xl font-bold mb-4">Data & Analytics</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-2 text-sm lg:text-base text-brand-textMuted"><i class="fa-solid fa-circle-dot text-[10px] text-brand-accent/50"></i> Data Analysis & Cleansing</li>
+                            <li class="flex items-center gap-2 text-sm lg:text-base text-brand-textMuted"><i class="fa-solid fa-circle-dot text-[10px] text-brand-accent/50"></i> Data Validation</li>
+                            <li class="flex items-center gap-2 text-sm lg:text-base text-brand-textMuted"><i class="fa-solid fa-circle-dot text-[10px] text-brand-accent/50"></i> Data Visualization</li>
+                            <li class="flex items-center gap-2 text-sm lg:text-base text-brand-textMuted"><i class="fa-solid fa-circle-dot text-[10px] text-brand-accent/50"></i> Quantitative Research</li>
+                            <li class="flex items-center gap-2 text-sm lg:text-base text-brand-textMuted"><i class="fa-solid fa-circle-dot text-[10px] text-brand-accent/50"></i> Problem Solving</li>
+                        </ul>
+                    </div>
+
+                    <!-- Skill Area 2 -->
+                    <div class="bg-brand-darker border border-white/5 p-6 lg:p-8 rounded-3xl hover-card gs-reveal">
+                        <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-brand-accent3/10 border border-brand-accent3/20 flex items-center justify-center text-brand-accent3 text-xl lg:text-2xl mb-5 lg:mb-6">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h3 class="text-xl lg:text-2xl font-bold mb-4">Tech Stack</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 lg:px-4 py-1.5 lg:py-2 bg-[#F29111]/10 text-[#F29111] border border-[#F29111]/20 rounded-full font-medium text-xs lg:text-sm">SQL</span>
+                            <span class="px-3 lg:px-4 py-1.5 lg:py-2 bg-[#3776AB]/10 text-[#3776AB] border border-[#3776AB]/20 rounded-full font-medium text-xs lg:text-sm">Python (Inter.)</span>
+                            <span class="px-3 lg:px-4 py-1.5 lg:py-2 bg-white/5 border border-white/10 rounded-full text-xs lg:text-sm">Machine Learning</span>
+                            <span class="px-3 lg:px-4 py-1.5 lg:py-2 bg-[#217346]/10 text-[#217346] border border-[#217346]/20 rounded-full font-medium text-xs lg:text-sm">Adv. Excel</span>
+                            <span class="px-3 lg:px-4 py-1.5 lg:py-2 bg-white/5 border border-white/10 rounded-full text-xs lg:text-sm">Tableau</span>
+                            <span class="px-3 lg:px-4 py-1.5 lg:py-2 bg-white/5 border border-white/10 rounded-full text-xs lg:text-sm">Looker Studio</span>
+                        </div>
+                        <p class="mt-5 lg:mt-6 text-xs lg:text-sm text-brand-textMuted leading-relaxed">
+                            Extensive experience utilizing Excel (Power Query, VBA/Macros) for rapid operational reporting, now transitioning to robust Python/SQL pipelines.
+                        </p>
+                    </div>
+
+                    <!-- Skill Area 3 -->
+                    <div class="bg-brand-darker border border-white/5 p-6 lg:p-8 rounded-3xl hover-card md:col-span-2 lg:col-span-1 gs-reveal">
+                        <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-brand-accent2/10 border border-brand-accent2/20 flex items-center justify-center text-brand-accent2 text-xl lg:text-2xl mb-5 lg:mb-6">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <h3 class="text-xl lg:text-2xl font-bold mb-4">Professional Skills</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs lg:text-sm mb-1 text-brand-textMuted"><span>Cross-functional Collaboration</span></div>
+                                <div class="w-full bg-brand-dark h-2 rounded-full overflow-hidden">
+                                    <div class="bg-brand-accent2 h-full rounded-full w-full"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs lg:text-sm mb-1 text-brand-textMuted"><span>Database Management</span></div>
+                                <div class="w-full bg-brand-dark h-2 rounded-full overflow-hidden">
+                                    <div class="bg-brand-accent2 h-full rounded-full w-[90%]"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs lg:text-sm mb-1 text-brand-textMuted"><span>Technical Mentorship</span></div>
+                                <div class="w-full bg-brand-dark h-2 rounded-full overflow-hidden">
+                                    <div class="bg-brand-accent2 h-full rounded-full w-[85%]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="bg-[#272729] section-curve overlap-up relative z-20 w-full">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12">
+                
+                <div class="flex flex-col lg:flex-row relative items-start">
+                    
+                    <!-- Left Column: Scrolling Text -->
+                    <div class="w-full lg:w-1/2 pt-20 lg:pt-24 pb-20 lg:pb-[30vh] lg:py-[30vh] relative z-10">
+                        
+                        <!-- Section Header -->
+                        <div class="mb-8 lg:mb-[20vh] gs-reveal">
+                            <div class="badge badge-accent mb-4">The Journey</div>
+                            <h2 class="heading-lg font-bold mb-4">Professional Experience</h2>
+                            <p class="text-lg lg:text-xl text-brand-textMuted max-w-md">Scroll to explore my career progression and the impact I've made along the way.</p>
+                        </div>
+
+                        <!-- Step 1 -->
+                        <div class="exp-step opacity-100 transition-opacity duration-500 mb-20 lg:mb-[40vh]">
+                            <div class="bg-brand-dark border border-white/5 p-6 sm:p-8 md:p-10 rounded-3xl relative overflow-hidden group shadow-lg">
+                                
+                                <!-- Mobile Visual (Hidden on Desktop) -->
+                                <div class="block lg:hidden w-full aspect-video rounded-2xl bg-brand-darker mb-6 border border-brand-accent/20 flex flex-col items-center justify-center relative overflow-hidden">
+                                    <div class="absolute inset-0 bg-brand-accent/5 rounded-full blur-xl scale-150"></div>
+                                    <div class="w-14 h-14 bg-brand-dark border border-brand-accent rounded-2xl flex items-center justify-center text-2xl text-brand-accent mb-2 z-10 shadow-neon"><i class="fa-solid fa-file-excel"></i></div>
+                                    <div class="text-white font-bold text-sm z-10">Optimizing Workflows</div>
+                                </div>
+                                
+                                <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-5 gap-3">
+                                    <div>
+                                        <h3 class="text-xl sm:text-2xl font-bold text-white mb-1">Data & Ops Specialist</h3>
+                                        <h4 class="text-brand-accent font-medium text-base sm:text-lg">Yureka Edukasi Cipta</h4>
+                                    </div>
+                                    <span class="inline-block px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap text-brand-textMuted w-max">Jun 2022 - Present</span>
+                                </div>
+                                
+                                <ul class="space-y-3 sm:space-y-4 text-sm sm:text-base text-brand-textMuted leading-relaxed mt-6">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-arrow-right mt-1.5 text-brand-accent text-xs"></i>
+                                        <div><strong class="text-white">Reporting Optimization:</strong> Developed automated reports using Advanced Excel, improving reporting efficiency by <span class="text-brand-accent font-bold">80%</span>.</div>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-arrow-right mt-1.5 text-brand-accent text-xs"></i>
+                                        <div><strong class="text-white">Database Management:</strong> Managed 10,000+ customer records monthly ensuring <span class="text-brand-accent font-bold">99% accuracy</span> to support Sales.</div>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-arrow-right mt-1.5 text-brand-accent text-xs"></i>
+                                        <div><strong class="text-white">Problem Solving:</strong> Analyzed complaint trends with cross-functional teams to formulate actionable solutions.</div>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-arrow-right mt-1.5 text-brand-accent text-xs"></i>
+                                        <div><strong class="text-white">Mentorship:</strong> Designed materials and delivered live Microsoft Excel training sessions.</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="exp-step opacity-100 lg:opacity-20 transition-opacity duration-500 mb-20 lg:mb-[40vh]">
+                            <div class="bg-brand-dark border border-white/5 p-6 sm:p-8 md:p-10 rounded-3xl relative overflow-hidden group hover-card">
+                                
+                                <!-- Mobile Visual (Hidden on Desktop) -->
+                                <div class="block lg:hidden w-full aspect-video rounded-2xl bg-brand-darker mb-6 border border-gray-600 flex flex-col items-center justify-center relative overflow-hidden">
+                                    <div class="w-14 h-14 bg-brand-dark border border-gray-400 rounded-full flex items-center justify-center text-2xl text-gray-300 mb-2 z-10"><i class="fa-solid fa-microscope"></i></div>
+                                    <div class="text-white font-bold text-sm z-10">Quantitative Analysis</div>
+                                </div>
+
+                                <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-5 gap-3">
+                                    <div>
+                                        <h3 class="text-xl sm:text-2xl font-bold text-white mb-1">Research Staff</h3>
+                                        <h4 class="text-gray-400 font-medium text-base sm:text-lg">Coastal & Marine Research Center</h4>
+                                    </div>
+                                    <span class="inline-block px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap text-brand-textMuted w-max">Aug 2021 - Dec 2021</span>
+                                </div>
+
+                                <ul class="space-y-3 sm:space-y-4 text-sm sm:text-base text-brand-textMuted leading-relaxed mt-6">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-minus mt-1.5 text-gray-500 text-xs"></i>
+                                        <div><strong class="text-gray-200">Quantitative Analysis:</strong> Executed identification and analysis of microplastic data samples with high precision for environmental impact assessments.</div>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-minus mt-1.5 text-gray-500 text-xs"></i>
+                                        <div><strong class="text-gray-200">Strategy:</strong> Served as a core team member, providing strategic guidance and supervising research methodologies.</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="exp-step opacity-100 lg:opacity-20 transition-opacity duration-500 mb-10">
+                            <div class="bg-brand-dark border border-white/5 p-6 sm:p-8 md:p-10 rounded-3xl relative overflow-hidden group hover-card">
+                                
+                                <!-- Mobile Visual (Hidden on Desktop) -->
+                                <div class="block lg:hidden w-full aspect-video rounded-2xl bg-brand-darker mb-6 border border-brand-accent3/30 flex flex-col items-center justify-center relative overflow-hidden">
+                                    <div class="absolute inset-0 bg-brand-accent3/10 rounded-full blur-xl scale-150"></div>
+                                    <div class="w-14 h-14 bg-brand-dark border border-brand-accent3 rounded-2xl flex items-center justify-center text-2xl text-brand-accent3 mb-2 z-10"><i class="fa-solid fa-chalkboard-user"></i></div>
+                                    <div class="text-white font-bold text-sm z-10">Academic Assistance</div>
+                                </div>
+
+                                <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-5 gap-3">
+                                    <div>
+                                        <h3 class="text-xl sm:text-2xl font-bold text-white mb-1">Research & Lab Assistant</h3>
+                                        <h4 class="text-brand-accent3 font-medium text-base sm:text-lg">Universitas Brawijaya</h4>
+                                    </div>
+                                    <span class="inline-block px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap text-brand-textMuted w-max">Nov 2018 - Sep 2021</span>
+                                </div>
+
+                                <ul class="space-y-3 sm:space-y-4 text-sm sm:text-base text-brand-textMuted leading-relaxed mt-6">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-minus mt-1.5 text-brand-accent3 text-xs"></i>
+                                        <div><strong class="text-gray-200">Data Processing:</strong> Guided students in processing and analyzing complex fisheries datasets as an Assistant Lecturer.</div>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-minus mt-1.5 text-brand-accent3 text-xs"></i>
+                                        <div><strong class="text-gray-200">Scientific Research:</strong> Contributed to specialized research projects focused on microplastic contamination in marine biota.</div>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-minus mt-1.5 text-brand-accent3 text-xs"></i>
+                                        <div><strong class="text-gray-200">Facilitation:</strong> Acted as Laboratory Assistant to facilitate practical learning and data gathering for university projects.</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Column: Pinned Visuals (Desktop Only) -->
+                    <div class="hidden lg:flex w-1/2 sticky top-0 h-screen items-center justify-center pl-16 pointer-events-none">
+                        <!-- Pinned Container -->
+                        <div class="relative w-full max-w-lg aspect-square bg-brand-darker border border-white/5 rounded-[3rem] shadow-2xl overflow-hidden flex items-center justify-center">
+                            
+                            <!-- Visual 1: Operations / Excel -->
+                            <div class="exp-visual absolute inset-0 flex flex-col items-center justify-center p-8 bg-gradient-to-b from-transparent to-brand-dark">
+                                <div class="relative w-48 h-48 flex items-center justify-center">
+                                    <div class="absolute inset-0 bg-brand-accent/20 rounded-full animate-ping opacity-50"></div>
+                                    <div class="absolute inset-4 border border-brand-accent/30 rounded-full border-dashed animate-[spin_10s_linear_infinite]"></div>
+                                    <div class="relative z-10 w-28 h-28 bg-[#151618] border border-brand-accent/50 rounded-2xl flex items-center justify-center text-6xl text-brand-accent shadow-neon">
+                                        <i class="fa-solid fa-file-excel"></i>
+                                    </div>
+                                    <div class="absolute -top-4 -right-2 bg-[#151618] p-3.5 rounded-xl border border-white/10 text-brand-accent2 shadow-lg"><i class="fa-solid fa-chart-line"></i></div>
+                                    <div class="absolute -bottom-2 -left-4 bg-[#151618] p-3.5 rounded-xl border border-white/10 text-brand-accent3 shadow-lg"><i class="fa-solid fa-database"></i></div>
+                                </div>
+                                <h3 class="text-3xl font-bold mt-10 text-white text-center">Optimizing Workflows</h3>
+                                <p class="text-brand-accent font-medium text-center mt-3 tracking-wide uppercase text-sm">80% efficiency improvement</p>
+                            </div>
+                            
+                            <!-- Visual 2: Research -->
+                            <div class="exp-visual absolute inset-0 flex flex-col items-center justify-center p-8 bg-gradient-to-b from-transparent to-brand-dark">
+                                <div class="relative w-48 h-48 flex items-center justify-center">
+                                    <div class="absolute inset-0 border-4 border-dashed border-gray-700 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                                    <div class="relative z-10 w-28 h-28 bg-[#151618] border border-gray-500 rounded-full flex items-center justify-center text-5xl text-gray-300 shadow-xl">
+                                        <i class="fa-solid fa-microscope"></i>
+                                    </div>
+                                    <div class="absolute top-2 -left-6 bg-[#151618] p-3 rounded-full border border-white/10 text-brand-accent3 shadow-lg"><i class="fa-solid fa-droplet"></i></div>
+                                </div>
+                                <h3 class="text-3xl font-bold mt-10 text-white text-center">Quantitative Analysis</h3>
+                                <p class="text-gray-400 font-medium text-center mt-3 tracking-wide uppercase text-sm">High precision data recording</p>
+                            </div>
+
+                            <!-- Visual 3: Academic/Mentorship -->
+                            <div class="exp-visual absolute inset-0 flex flex-col items-center justify-center p-8 bg-gradient-to-b from-transparent to-brand-dark">
+                                <div class="relative w-48 h-48 flex items-center justify-center">
+                                    <div class="absolute inset-0 bg-brand-accent3/10 rounded-full scale-150 blur-2xl"></div>
+                                    <div class="relative z-10 w-28 h-28 bg-[#151618] border border-brand-accent3/50 rounded-2xl flex items-center justify-center text-5xl text-brand-accent3 shadow-[0_0_30px_rgba(101,203,241,0.3)]">
+                                        <i class="fa-solid fa-chalkboard-user"></i>
+                                    </div>
+                                    <div class="absolute top-1/2 -right-12 w-20 h-0.5 bg-brand-accent3/40 -z-10"></div>
+                                    <div class="absolute top-1/2 -left-12 w-20 h-0.5 bg-brand-accent3/40 -z-10"></div>
+                                    <div class="absolute -top-12 left-1/2 w-0.5 h-20 bg-brand-accent3/40 -z-10"></div>
+                                </div>
+                                <h3 class="text-3xl font-bold mt-10 text-white text-center">Academic Assistance</h3>
+                                <p class="text-brand-accent3 font-medium text-center mt-3 tracking-wide uppercase text-sm">Mentoring & Data Processing</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Education & Certs -->
+        <section class="pt-20 lg:pt-24 pb-32 lg:pb-48 px-6 lg:px-12 bg-[#F4F2EB] section-curve overlap-up relative z-[25] shadow-xl w-full">
+            <div class="max-w-7xl mx-auto text-brand-dark">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+                    
+                    <!-- Education -->
+                    <div class="gs-reveal">
+                        <h2 class="text-2xl lg:text-3xl font-bold mb-6 lg:mb-8 flex items-center gap-3">
+                            <i class="fa-solid fa-graduation-cap text-brand-accent"></i> Education
+                        </h2>
+                        <div class="space-y-4 lg:space-y-6">
+                            <div class="bg-white border border-l-4 border-l-brand-accent border-gray-200 p-5 lg:p-6 rounded-r-2xl shadow-sm hover:shadow-md transition-shadow">
+                                <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-2 sm:mb-1">
+                                    <h3 class="text-lg lg:text-xl font-bold leading-tight">Online Data Science Fellowship</h3>
+                                    <span class="text-brand-accent text-sm font-bold mt-1 sm:mt-0">2025</span>
+                                </div>
+                                <p class="text-gray-600 mb-2 font-medium text-sm lg:text-base">Digital Skola</p>
+                                <p class="text-xs lg:text-sm text-gray-500 border-t border-gray-100 pt-3 mt-3">Focus: Python, SQL, Machine Learning, and Advanced Data Analytics.</p>
+                            </div>
+                            <div class="bg-white border border-l-4 border-l-gray-400 border-gray-200 p-5 lg:p-6 rounded-r-2xl shadow-sm hover:shadow-md transition-shadow">
+                                <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-2 sm:mb-1">
+                                    <h3 class="text-base lg:text-lg font-bold leading-tight">Bachelor of Marine Science</h3>
+                                    <span class="text-gray-500 text-sm mt-1 sm:mt-0">2017 - 2021</span>
+                                </div>
+                                <p class="text-gray-600 mb-1 font-medium text-sm lg:text-base">Universitas Brawijaya, Malang</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Certifications -->
+                    <div class="gs-reveal">
+                        <h2 class="text-2xl lg:text-3xl font-bold mb-6 lg:mb-8 flex items-center gap-3">
+                            <i class="fa-solid fa-certificate text-[#65CBF1]"></i> Certifications
+                        </h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-white border border-gray-200 p-5 lg:p-6 rounded-2xl hover:border-[#65CBF1] hover:shadow-md transition-all">
+                                <div class="text-[#65CBF1] text-xl lg:text-2xl mb-2 lg:mb-3"><i class="fa-solid fa-id-card"></i></div>
+                                <h4 class="font-bold text-base lg:text-lg mb-1">Associate Data Scientist</h4>
+                                <p class="text-xs lg:text-sm text-gray-500">BNSP • 2025</p>
+                            </div>
+                            <div class="bg-white border border-gray-200 p-5 lg:p-6 rounded-2xl hover:border-brand-accent hover:shadow-md transition-all">
+                                <div class="text-brand-accent text-xl lg:text-2xl mb-2 lg:mb-3"><i class="fa-solid fa-code-branch"></i></div>
+                                <h4 class="font-bold text-base lg:text-lg mb-1">Data Science Certification</h4>
+                                <p class="text-xs lg:text-sm text-gray-500">Digital Skola • 2025</p>
+                            </div>
+                            <div class="bg-white border border-gray-200 p-5 lg:p-6 rounded-2xl sm:col-span-2 hover:border-green-500 hover:shadow-md transition-all">
+                                <div class="flex items-center gap-4">
+                                    <div class="text-green-500 text-2xl lg:text-3xl"><i class="fa-solid fa-file-excel"></i></div>
+                                    <div>
+                                        <h4 class="font-bold text-base lg:text-lg mb-0.5">Microsoft Office Desktop App</h4>
+                                        <p class="text-xs lg:text-sm text-gray-500">Trust • 2021</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section (Infinite 3D Carousel via Swiper + Manual 360 Spin) -->
+        <section id="portfolio" class="bg-brand-darker pt-20 lg:pt-32 pb-24 md:pb-40 section-concave section-arch-bottom overlap-up relative z-[30] w-full">
+            
+            <!-- Section Header -->
+            <div class="px-6 lg:px-12 mb-10 lg:mb-12 max-w-7xl mx-auto gs-reveal relative z-10">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div>
+                        <div class="badge badge-accent3 mb-4">Featured Projects</div>
+                        <h2 class="heading-lg font-bold mb-4 text-white">Selected Portfolios</h2>
+                        <p class="text-lg lg:text-xl text-brand-textMuted max-w-2xl">A collection of my work spanning from spreadsheet automation to geospatial mapping.</p>
+                    </div>
+                    <!-- Interaction Indicators -->
+                    <div class="hidden md:flex items-center gap-4 text-brand-textMuted mb-2">
+                        <div class="flex items-center gap-2 bg-brand-dark px-4 py-2 rounded-full border border-white/5 shadow-sm">
+                            <i class="fa-solid fa-arrows-left-right text-brand-accent3"></i>
+                            <span class="text-[10px] lg:text-xs font-bold uppercase tracking-widest">Drag gap to slide</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-brand-dark px-4 py-2 rounded-full border border-white/5 shadow-sm">
+                            <i class="fa-solid fa-rotate text-brand-accent"></i>
+                            <span class="text-[10px] lg:text-xs font-bold uppercase tracking-widest">Drag card to 360 spin</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Swiper Carousel Container -->
+            <div class="w-full relative px-0 lg:px-12 gs-reveal overflow-visible">
+                
+                <!-- Swiper main container -->
+                <div class="swiper mySwiper select-none">
+                    <div class="swiper-wrapper">
+                        
+                        <!-- Slide 1: Excel -->
+                        <div class="swiper-slide">
+                            <div class="portfolio-card w-full relative cursor-pointer">
+                                <div class="portfolio-card-inner transition-colors hover:shadow-[0_0_40px_rgba(34,197,94,0.2)]">
+                                    
+                                    <!-- FRONT FACE -->
+                                    <div class="card-face card-face-front flex flex-col justify-between hover:border-green-500/50 transition-colors">
+                                        <div class="flex justify-between items-start">
+                                            <div class="w-12 h-12 lg:w-16 lg:h-16 rounded-xl lg:rounded-2xl bg-green-500/10 text-green-500 flex items-center justify-center text-xl lg:text-3xl shadow-[0_0_30px_rgba(34,197,94,0.15)]"><i class="fa-solid fa-file-excel"></i></div>
+                                            <div class="flex gap-2"><span class="px-3 py-1 lg:px-4 lg:py-1.5 bg-white/5 rounded-full text-[9px] lg:text-xs font-bold text-white border border-white/10 shadow-sm backdrop-blur-md">Trainer & Macros</span></div>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-2 lg:mb-4 drop-shadow-md"><a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="hover:text-green-400 transition-colors">Microsoft Excel</h3>
+                                            <p class="text-brand-textMuted text-xs sm:text-sm lg:text-lg leading-relaxed mb-4 lg:mb-8 text-shadow-sm line-clamp-3 lg:line-clamp-none">A comprehensive collection of training materials and practice exercises that I have compiled for my Excel training sessions.</p>
+                                            <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-bold text-[10px] lg:text-sm uppercase tracking-wider text-green-400 group bg-green-500/10 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full backdrop-blur-md hover:bg-green-500/20 transition-colors">View Templates <i class="fa-solid fa-arrow-right ml-1.5 lg:ml-2 group-hover:translate-x-1.5 transition-transform"></i></a>
+                                        </div>
+                                    </div>
+
+                                    <!-- BACK FACE -->
+                                    <div class="card-face card-face-back">
+                                        <div class="text-green-500 text-4xl lg:text-6xl mb-4 lg:mb-6 opacity-50"><i class="fa-solid fa-table"></i></div>
+                                        <h4 class="text-lg lg:text-2xl font-bold mb-2 text-white">Automate Repetitive Tasks</h4>
+                                        <p class="text-brand-textMuted text-xs lg:text-sm">VBA Macros, Power Query, and Advanced Formulas to streamline operations.</p>
+                                        <div class="mt-4 lg:mt-6 flex gap-2 justify-center items-center">
+                                            <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
+                                            <span class="text-[10px] lg:text-xs uppercase tracking-widest text-green-500 font-bold">Ready to Deploy</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- SIDES -->
+                                    <div class="card-face card-face-right"></div>
+                                    <div class="card-face card-face-left"></div>
+                                    <div class="card-face card-face-top"></div>
+                                    <div class="card-face card-face-bottom"></div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2: Data Science -->
+                        <div class="swiper-slide">
+                            <div class="portfolio-card w-full relative cursor-pointer">
+                                <div class="portfolio-card-inner transition-colors hover:shadow-[0_0_40px_rgba(249,220,84,0.2)]">
+                                    <div class="card-face card-face-front flex flex-col justify-between hover:border-brand-accent2/50 transition-colors">
+                                        <div class="flex justify-between items-start">
+                                            <div class="w-12 h-12 lg:w-16 lg:h-16 rounded-xl lg:rounded-2xl bg-brand-accent2/10 text-brand-accent2 flex items-center justify-center text-xl lg:text-3xl shadow-[0_0_30px_rgba(249,220,84,0.15)]"><i class="fa-brands fa-python"></i></div>
+                                            <div class="flex gap-2"><span class="px-3 py-1 lg:px-4 lg:py-1.5 bg-white/5 rounded-full text-[9px] lg:text-xs font-bold text-white border border-white/10 shadow-sm backdrop-blur-md">Python & ML</span></div>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-2 lg:mb-4 drop-shadow-md"><a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="hover:text-green-400 transition-colors">Data Science</h3>
+                                            <p class="text-brand-textMuted text-xs sm:text-sm lg:text-lg leading-relaxed mb-4 lg:mb-8 text-shadow-sm line-clamp-3 lg:line-clamp-none">Machine Learning Exploration, featuring a repository of Google Colab notebooks and a Python coding portfolio.</p>
+                                            <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-bold text-[10px] lg:text-sm uppercase tracking-wider text-brand-accent2 group bg-brand-accent2/10 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full backdrop-blur-md">Open Notebooks <i class="fa-solid fa-arrow-right ml-1.5 lg:ml-2 group-hover:translate-x-1.5 transition-transform"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-back">
+                                        <div class="text-brand-accent2 text-4xl lg:text-6xl mb-4 lg:mb-6 opacity-50"><i class="fa-solid fa-brain"></i></div>
+                                        <h4 class="text-lg lg:text-2xl font-bold mb-2 text-white">Predictive Modeling</h4>
+                                        <p class="text-brand-textMuted text-xs lg:text-sm">Regression, Classification, and clustering algorithms built in Python.</p>
+                                        <div class="mt-4 lg:mt-6 flex gap-2 justify-center items-center">
+                                            <span class="w-2 h-2 rounded-full bg-brand-accent2 animate-ping"></span>
+                                            <span class="text-[10px] lg:text-xs uppercase tracking-widest text-brand-accent2 font-bold">Jupyter Active</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-right"></div><div class="card-face card-face-left"></div><div class="card-face card-face-top"></div><div class="card-face card-face-bottom"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3: Dashboard -->
+                        <div class="swiper-slide">
+                            <div class="portfolio-card w-full relative cursor-pointer">
+                                <div class="portfolio-card-inner transition-colors hover:shadow-[0_0_40px_rgba(64,235,152,0.2)]">
+                                    <div class="card-face card-face-front flex flex-col justify-between hover:border-brand-accent/50 transition-colors">
+                                        <div class="flex justify-between items-start">
+                                            <div class="w-12 h-12 lg:w-16 lg:h-16 rounded-xl lg:rounded-2xl bg-brand-accent/10 text-brand-accent flex items-center justify-center text-xl lg:text-3xl shadow-[0_0_30px_rgba(64,235,152,0.15)]"><i class="fa-solid fa-chart-column"></i></div>
+                                            <div class="flex gap-2"><span class="px-3 py-1 lg:px-4 lg:py-1.5 bg-white/5 rounded-full text-[9px] lg:text-xs font-bold text-white border border-white/10 shadow-sm backdrop-blur-md">Tableau & Data Viz</span></div>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-2 lg:mb-4 drop-shadow-md"><a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="hover:text-green-400 transition-colors">Dashboard Visual</h3>
+                                            <p class="text-brand-textMuted text-xs sm:text-sm lg:text-lg leading-relaxed mb-4 lg:mb-8 text-shadow-sm line-clamp-3 lg:line-clamp-none">A collection of interactive data visualizations created with Tableau and Excel, designed to facilitate data-driven decision-making.</p>
+                                            <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-bold text-[10px] lg:text-sm uppercase tracking-wider text-brand-accent group bg-brand-accent/10 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full backdrop-blur-md">See Visuals <i class="fa-solid fa-arrow-right ml-1.5 lg:ml-2 group-hover:translate-x-1.5 transition-transform"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-back">
+                                        <div class="text-brand-accent text-4xl lg:text-6xl mb-4 lg:mb-6 opacity-50"><i class="fa-solid fa-chart-pie"></i></div>
+                                        <h4 class="text-lg lg:text-2xl font-bold mb-2 text-white">Interactive Insights</h4>
+                                        <p class="text-brand-textMuted text-xs lg:text-sm">Transforming raw SQL queries into actionable executive dashboards.</p>
+                                        <div class="mt-4 lg:mt-6 flex gap-2 justify-center items-center">
+                                            <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span>
+                                            <span class="text-[10px] lg:text-xs uppercase tracking-widest text-brand-accent font-bold">Live Data</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-right"></div><div class="card-face card-face-left"></div><div class="card-face card-face-top"></div><div class="card-face card-face-bottom"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4: Spatial Mapping -->
+                        <div class="swiper-slide">
+                            <div class="portfolio-card w-full relative cursor-pointer">
+                                <div class="portfolio-card-inner transition-colors hover:shadow-[0_0_40px_rgba(101,203,241,0.2)]">
+                                    <div class="card-face card-face-front flex flex-col justify-between hover:border-brand-accent3/50 transition-colors">
+                                        <div class="flex justify-between items-start">
+                                            <div class="w-12 h-12 lg:w-16 lg:h-16 rounded-xl lg:rounded-2xl bg-brand-accent3/10 text-brand-accent3 flex items-center justify-center text-xl lg:text-3xl shadow-[0_0_30px_rgba(101,203,241,0.15)]"><i class="fa-solid fa-earth-asia"></i></div>
+                                            <div class="flex gap-2"><span class="px-3 py-1 lg:px-4 lg:py-1.5 bg-white/5 rounded-full text-[9px] lg:text-xs font-bold text-white border border-white/10 shadow-sm backdrop-blur-md">ArcGIS & QGIS</span></div>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-2 lg:mb-4 drop-shadow-md"><a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="hover:text-green-400 transition-colors">Spatial Mapping</h3>
+                                            <p class="text-brand-textMuted text-xs sm:text-sm lg:text-lg leading-relaxed mb-4 lg:mb-8 text-shadow-sm line-clamp-3 lg:line-clamp-none">Geospatial mapping projects utilizing software such as ArcGIS, QGIS, and Google Earth Engine (GEE).</p>
+                                            <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-bold text-[10px] lg:text-sm uppercase tracking-wider text-brand-accent3 group bg-brand-accent3/10 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full backdrop-blur-md">Explore Maps <i class="fa-solid fa-arrow-right ml-1.5 lg:ml-2 group-hover:translate-x-1.5 transition-transform"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-back">
+                                        <div class="text-brand-accent3 text-4xl lg:text-6xl mb-4 lg:mb-6 opacity-50"><i class="fa-solid fa-map-location-dot"></i></div>
+                                        <h4 class="text-lg lg:text-2xl font-bold mb-2 text-white">Geospatial Analysis</h4>
+                                        <p class="text-brand-textMuted text-xs lg:text-sm">Mapping complex geographic datasets to identify regional trends.</p>
+                                        <div class="mt-4 lg:mt-6 flex gap-2 justify-center items-center">
+                                            <span class="w-2 h-2 rounded-full bg-brand-accent3 animate-ping"></span>
+                                            <span class="text-[10px] lg:text-xs uppercase tracking-widest text-brand-accent3 font-bold">Layers Loaded</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-right"></div><div class="card-face card-face-left"></div><div class="card-face card-face-top"></div><div class="card-face card-face-bottom"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DUPLICATES FOR INFINITE LOOP -->
+                        <div class="swiper-slide">
+                            <div class="portfolio-card w-full relative cursor-pointer">
+                                <div class="portfolio-card-inner transition-colors hover:shadow-[0_0_40px_rgba(34,197,94,0.2)]">
+                                    <div class="card-face card-face-front flex flex-col justify-between hover:border-green-500/50 transition-colors">
+                                        <div class="flex justify-between items-start">
+                                            <div class="w-12 h-12 lg:w-16 lg:h-16 rounded-xl lg:rounded-2xl bg-green-500/10 text-green-500 flex items-center justify-center text-xl lg:text-3xl shadow-[0_0_30px_rgba(34,197,94,0.15)]"><i class="fa-solid fa-file-excel"></i></div>
+                                            <div class="flex gap-2"><span class="px-3 py-1 lg:px-4 lg:py-1.5 bg-white/5 rounded-full text-[9px] lg:text-xs font-bold text-white border border-white/10 shadow-sm backdrop-blur-md">Trainer & Macros</span></div>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-2 lg:mb-4 drop-shadow-md"><a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="hover:text-green-400 transition-colors">Microsoft Excel</h3>
+                                            <p class="text-brand-textMuted text-xs sm:text-sm lg:text-lg leading-relaxed mb-4 lg:mb-8 text-shadow-sm line-clamp-3 lg:line-clamp-none">A comprehensive collection of training materials and practice exercises that I have compiled for my Excel training sessions.</p>
+                                            <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-bold text-[10px] lg:text-sm uppercase tracking-wider text-green-400 group bg-green-500/10 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full backdrop-blur-md hover:bg-green-500/20 transition-colors">View Templates <i class="fa-solid fa-arrow-right ml-1.5 lg:ml-2 group-hover:translate-x-1.5 transition-transform"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-back">
+                                        <div class="text-green-500 text-4xl lg:text-6xl mb-4 lg:mb-6 opacity-50"><i class="fa-solid fa-table"></i></div>
+                                        <h4 class="text-lg lg:text-2xl font-bold mb-2 text-white">Automate Repetitive Tasks</h4>
+                                        <p class="text-brand-textMuted text-xs lg:text-sm">VBA Macros, Power Query, and Advanced Formulas to streamline operations.</p>
+                                        <div class="mt-4 lg:mt-6 flex gap-2 justify-center items-center">
+                                            <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
+                                            <span class="text-[10px] lg:text-xs uppercase tracking-widest text-green-500 font-bold">Ready to Deploy</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-right"></div><div class="card-face card-face-left"></div><div class="card-face card-face-top"></div><div class="card-face card-face-bottom"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="swiper-slide">
+                            <div class="portfolio-card w-full relative cursor-pointer">
+                                <div class="portfolio-card-inner transition-colors hover:shadow-[0_0_40px_rgba(249,220,84,0.2)]">
+                                    <div class="card-face card-face-front flex flex-col justify-between hover:border-brand-accent2/50 transition-colors">
+                                        <div class="flex justify-between items-start">
+                                            <div class="w-12 h-12 lg:w-16 lg:h-16 rounded-xl lg:rounded-2xl bg-brand-accent2/10 text-brand-accent2 flex items-center justify-center text-xl lg:text-3xl shadow-[0_0_30px_rgba(249,220,84,0.15)]"><i class="fa-brands fa-python"></i></div>
+                                            <div class="flex gap-2"><span class="px-3 py-1 lg:px-4 lg:py-1.5 bg-white/5 rounded-full text-[9px] lg:text-xs font-bold text-white border border-white/10 shadow-sm backdrop-blur-md">Python & ML</span></div>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-2 lg:mb-4 drop-shadow-md"><a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="hover:text-green-400 transition-colors">Data Science</h3>
+                                            <p class="text-brand-textMuted text-xs sm:text-sm lg:text-lg leading-relaxed mb-4 lg:mb-8 text-shadow-sm line-clamp-3 lg:line-clamp-none">Machine Learning Exploration, featuring a repository of Google Colab notebooks and a Python coding portfolio.</p>
+                                            <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-bold text-[10px] lg:text-sm uppercase tracking-wider text-brand-accent2 group bg-brand-accent2/10 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full backdrop-blur-md">Open Notebooks <i class="fa-solid fa-arrow-right ml-1.5 lg:ml-2 group-hover:translate-x-1.5 transition-transform"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-back">
+                                        <div class="text-brand-accent2 text-4xl lg:text-6xl mb-4 lg:mb-6 opacity-50"><i class="fa-solid fa-brain"></i></div>
+                                        <h4 class="text-lg lg:text-2xl font-bold mb-2 text-white">Predictive Modeling</h4>
+                                        <p class="text-brand-textMuted text-xs lg:text-sm">Regression, Classification, and clustering algorithms built in Python.</p>
+                                        <div class="mt-4 lg:mt-6 flex gap-2 justify-center items-center">
+                                            <span class="w-2 h-2 rounded-full bg-brand-accent2 animate-ping"></span>
+                                            <span class="text-[10px] lg:text-xs uppercase tracking-widest text-brand-accent2 font-bold">Jupyter Active</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-right"></div><div class="card-face card-face-left"></div><div class="card-face card-face-top"></div><div class="card-face card-face-bottom"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="portfolio-card w-full relative cursor-pointer">
+                                <div class="portfolio-card-inner transition-colors hover:shadow-[0_0_40px_rgba(64,235,152,0.2)]">
+                                    <div class="card-face card-face-front flex flex-col justify-between hover:border-brand-accent/50 transition-colors">
+                                        <div class="flex justify-between items-start">
+                                            <div class="w-12 h-12 lg:w-16 lg:h-16 rounded-xl lg:rounded-2xl bg-brand-accent/10 text-brand-accent flex items-center justify-center text-xl lg:text-3xl shadow-[0_0_30px_rgba(64,235,152,0.15)]"><i class="fa-solid fa-chart-column"></i></div>
+                                            <div class="flex gap-2"><span class="px-3 py-1 lg:px-4 lg:py-1.5 bg-white/5 rounded-full text-[9px] lg:text-xs font-bold text-white border border-white/10 shadow-sm backdrop-blur-md">Tableau & Data Viz</span></div>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-2 lg:mb-4 drop-shadow-md"><a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="hover:text-green-400 transition-colors">Dashboard Visual</h3>
+                                            <p class="text-brand-textMuted text-xs sm:text-sm lg:text-lg leading-relaxed mb-4 lg:mb-8 text-shadow-sm line-clamp-3 lg:line-clamp-none">A collection of interactive data visualizations created with Tableau and Excel, designed to facilitate data-driven decision-making.</p>
+                                            <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-bold text-[10px] lg:text-sm uppercase tracking-wider text-brand-accent group bg-brand-accent/10 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full backdrop-blur-md">See Visuals <i class="fa-solid fa-arrow-right ml-1.5 lg:ml-2 group-hover:translate-x-1.5 transition-transform"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-back">
+                                        <div class="text-brand-accent text-4xl lg:text-6xl mb-4 lg:mb-6 opacity-50"><i class="fa-solid fa-chart-pie"></i></div>
+                                        <h4 class="text-lg lg:text-2xl font-bold mb-2 text-white">Interactive Insights</h4>
+                                        <p class="text-brand-textMuted text-xs lg:text-sm">Transforming raw SQL queries into actionable executive dashboards.</p>
+                                        <div class="mt-4 lg:mt-6 flex gap-2 justify-center items-center">
+                                            <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span>
+                                            <span class="text-[10px] lg:text-xs uppercase tracking-widest text-brand-accent font-bold">Live Data</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-right"></div><div class="card-face card-face-left"></div><div class="card-face card-face-top"></div><div class="card-face card-face-bottom"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="portfolio-card w-full relative cursor-pointer">
+                                <div class="portfolio-card-inner transition-colors hover:shadow-[0_0_40px_rgba(101,203,241,0.2)]">
+                                    <div class="card-face card-face-front flex flex-col justify-between hover:border-brand-accent3/50 transition-colors">
+                                        <div class="flex justify-between items-start">
+                                            <div class="w-12 h-12 lg:w-16 lg:h-16 rounded-xl lg:rounded-2xl bg-brand-accent3/10 text-brand-accent3 flex items-center justify-center text-xl lg:text-3xl shadow-[0_0_30px_rgba(101,203,241,0.15)]"><i class="fa-solid fa-earth-asia"></i></div>
+                                            <div class="flex gap-2"><span class="px-3 py-1 lg:px-4 lg:py-1.5 bg-white/5 rounded-full text-[9px] lg:text-xs font-bold text-white border border-white/10 shadow-sm backdrop-blur-md">ArcGIS & QGIS</span></div>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-2 lg:mb-4 drop-shadow-md"><a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="hover:text-green-400 transition-colors">Spatial Mapping</h3>
+                                            <p class="text-brand-textMuted text-xs sm:text-sm lg:text-lg leading-relaxed mb-4 lg:mb-8 text-shadow-sm line-clamp-3 lg:line-clamp-none">Geospatial mapping projects utilizing software such as ArcGIS, QGIS, and Google Earth Engine (GEE).</p>
+                                            <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-bold text-[10px] lg:text-sm uppercase tracking-wider text-brand-accent3 group bg-brand-accent3/10 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full backdrop-blur-md">Explore Maps <i class="fa-solid fa-arrow-right ml-1.5 lg:ml-2 group-hover:translate-x-1.5 transition-transform"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-back">
+                                        <div class="text-brand-accent3 text-4xl lg:text-6xl mb-4 lg:mb-6 opacity-50"><i class="fa-solid fa-map-location-dot"></i></div>
+                                        <h4 class="text-lg lg:text-2xl font-bold mb-2 text-white">Geospatial Analysis</h4>
+                                        <p class="text-brand-textMuted text-xs lg:text-sm">Mapping complex geographic datasets to identify regional trends.</p>
+                                        <div class="mt-4 lg:mt-6 flex gap-2 justify-center items-center">
+                                            <span class="w-2 h-2 rounded-full bg-brand-accent3 animate-ping"></span>
+                                            <span class="text-[10px] lg:text-xs uppercase tracking-widest text-brand-accent3 font-bold">Layers Loaded</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-face card-face-right"></div><div class="card-face card-face-left"></div><div class="card-face card-face-top"></div><div class="card-face card-face-bottom"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <!-- Swiper Navigation Arrows -->
+                <div class="swiper-button-prev flex absolute left-2 lg:left-8 top-1/2 -translate-y-1/2 z-40"></div>
+                <div class="swiper-button-next flex absolute right-2 lg:right-8 top-1/2 -translate-y-1/2 z-40"></div>
+            </div>
+        </section>
+
+        <!-- Footer CTA -->
+        <footer id="contact" class="bg-[#FAFAFA] pt-24 pb-12 px-6 lg:px-12 relative overflow-hidden w-full">
+            <!-- Abstract Footer Graphic -->
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-brand-accent/20 rounded-t-[100%] blur-[80px] pointer-events-none"></div>
+
+            <div class="max-w-4xl mx-auto text-center relative z-10">
+                <h2 class="heading-lg font-bold mb-4 lg:mb-6 text-brand-dark">Ready to optimize your data strategy?</h2>
+                <p class="text-lg lg:text-xl text-gray-600 mb-8 lg:mb-10 max-w-2xl mx-auto">
+                    Whether you need to streamline operations, build reporting pipelines, or extract deeper insights, I'm open to discussing opportunities.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4 lg:gap-6 mb-12 lg:mb-16">
+                    <a href="mailto:bayu.krisnahadi99@gmail.com" class="bg-brand-dark text-white font-bold py-3 px-6 lg:py-4 lg:px-8 rounded-full hover:bg-brand-accent hover:text-brand-dark transition-colors flex items-center justify-center gap-3 shadow-lg">
+                        <i class="fa-solid fa-envelope text-lg lg:text-xl"></i> Send an Email
+                    </a>
+                    <a href="https://linkedin.com/in/muhamad-bayu-krisnahadi" target="_blank" class="border border-brand-dark/20 text-brand-dark font-bold py-3 px-6 lg:py-4 lg:px-8 rounded-full hover:bg-black/5 transition-colors flex items-center justify-center gap-3">
+                        <i class="fa-brands fa-linkedin text-lg lg:text-xl"></i> Connect on LinkedIn
+                    </a>
+                </div>
+
+                <div class="border-t border-black/10 pt-6 lg:pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs lg:text-sm text-gray-500">
+                    <div>&copy; <span id="year"></span> Muhamad Bayu Krisnahadi.</div>
+                    <div class="flex gap-6">
+                        <a href="mailto:bayu.krisnahadi99@gmail.com" class="hover:text-brand-dark transition-colors">bayu.krisnahadi99@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Scripts -->
+    <script>
+        // Set Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const links = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                menu.classList.remove('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = '';
+            }
+        }
+
+        btn.addEventListener('click', toggleMenu);
+        links.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        const revealElements = document.querySelectorAll('.gs-reveal');
+        revealElements.forEach((el) => {
+            gsap.fromTo(el, 
+                { autoAlpha: 0, y: 30 }, 
+                { 
+                    duration: 0.8, 
+                    autoAlpha: 1, 
+                    y: 0, 
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%", 
+                        toggleActions: "play none none none"
+                    }
+                }
+            );
+        });
+
+        // Hero Parallax Blob Effect
+        gsap.to('.blob', {
+            yPercent: 40,
+            opacity: 0,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".content-wrapper",
+                start: "top bottom", 
+                end: "top top",
+                scrub: true
+            }
+        });
+
+        // Sticky Scroll Experience
+        const expSteps = gsap.utils.toArray('.exp-step');
+        const expVisuals = gsap.utils.toArray('.exp-visual');
+
+        if (expSteps.length > 0) {
+            gsap.set(expVisuals, {autoAlpha: 0, y: 40, scale: 0.9});
+            if (expVisuals[0]) gsap.set(expVisuals[0], {autoAlpha: 1, y: 0, scale: 1});
+
+            expSteps.forEach((step, i) => {
+                ScrollTrigger.create({
+                    trigger: step,
+                    start: "top 60%", 
+                    end: "bottom 40%", 
+                    onEnter: () => activateStep(i),
+                    onEnterBack: () => activateStep(i)
+                });
+            });
+
+            function activateStep(index) {
+                expSteps.forEach((step, i) => {
+                    gsap.to(step, { opacity: i === index ? 1 : 0.2, duration: 0.5, ease: "power2.out" });
+                });
+
+                if (window.innerWidth >= 1024) {
+                    expVisuals.forEach((visual, i) => {
+                        if (i === index) {
+                            gsap.to(visual, {autoAlpha: 1, y: 0, scale: 1, duration: 0.7, ease: "back.out(1.4)", overwrite: "auto"});
+                        } else {
+                            gsap.to(visual, {autoAlpha: 0, y: i < index ? -40 : 40, scale: 0.9, duration: 0.4, ease: "power2.in", overwrite: "auto"});
+                        }
+                    });
+                }
+            }
+        }
+
+        // --- SWIPER 3D COVERFLOW INITIALIZATION ---
+        const swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            loop: true, 
+            speed: 800, 
+            coverflowEffect: {
+                rotate: 30,
+                stretch: 0, 
+                depth: 150,
+                modifier: 1,
+                slideShadows: false, 
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            noSwipingSelector: '.swiper-slide-active .portfolio-card'
+        });
+
+        // --- 360 DEGREE SPIN EFFECT ON ACTIVE CARD ---
+        const swiperCards = document.querySelectorAll('.portfolio-card');
+        
+        swiperCards.forEach(card => {
+            const inner = card.querySelector('.portfolio-card-inner');
+            let isDragging = false;
+            let startX, startY;
+            let currentRotX = 0, currentRotY = 0;
+            
+            card.addEventListener('pointerdown', (e) => {
+                if(!card.closest('.swiper-slide').classList.contains('swiper-slide-active')) return;
+                
+                isDragging = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                
+                inner.style.cursor = 'grabbing';
+                gsap.killTweensOf(inner); 
+            });
+
+            window.addEventListener('pointermove', (e) => {
+                if (isDragging) {
+                    const deltaX = e.clientX - startX;
+                    const deltaY = e.clientY - startY;
+                    
+                    currentRotY += (deltaX * 0.5); 
+                    currentRotX -= (deltaY * 0.5);
+                    
+                    gsap.to(inner, {
+                        rotateX: currentRotX,
+                        rotateY: currentRotY,
+                        ease: "none",
+                        duration: 0.1,
+                        overwrite: "auto"
+                    });
+                    
+                    startX = e.clientX;
+                    startY = e.clientY;
+                }
+            });
+
+            window.addEventListener('pointerup', () => {
+                if(isDragging) {
+                    isDragging = false;
+                    inner.style.cursor = 'pointer';
+                    
+                    gsap.to(inner, {
+                        rotateX: 0,
+                        rotateY: 0,
+                        ease: "elastic.out(1, 0.5)",
+                        duration: 1.2
+                    });
+                    
+                    currentRotX = 0;
+                    currentRotY = 0;
+                }
+            });
+            
+            card.addEventListener('mousemove', (e) => {
+                if(isDragging || !card.closest('.swiper-slide').classList.contains('swiper-slide-active')) return;
+                
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const hoverRotX = ((y - centerY) / centerY) * -10; 
+                const hoverRotY = ((x - centerX) / centerX) * 10;
+                
+                gsap.to(inner, {
+                    rotateX: hoverRotX,
+                    rotateY: hoverRotY,
+                    ease: "power1.out",
+                    duration: 0.3
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                if(!isDragging) {
+                    gsap.to(inner, {
+                        rotateX: 0,
+                        rotateY: 0,
+                        ease: "elastic.out(1, 0.4)",
+                        duration: 0.8
+                    });
+                }
+            });
+        });
+        
+        swiper.on('slideChangeTransitionStart', function () {
+            document.querySelectorAll('.portfolio-card-inner').forEach(inner => {
+                gsap.to(inner, { rotateX: 0, rotateY: 0, duration: 0.3 });
+            });
+        });
+    </script>
+</body>
+</html>
