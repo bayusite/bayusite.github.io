@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="https://www.xml-sitemaps.com/css/sitemap.css"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:fo="http://www.w3.org/1999/XSL/Format"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://bayusite.github.io/</loc>
+  <lastmod>2026-06-26T11:54:38+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Microsoft-Excel/</loc>
+  <lastmod>2026-06-18T02:56:40+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Data-Science/</loc>
+  <lastmod>2026-06-21T16:14:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/video-library/</loc>
+  <lastmod>2026-06-18T02:50:28+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Logika-Operator/</loc>
+  <lastmod>2026-05-18T08:55:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Rumus-Index-Match/</loc>
+  <lastmod>2026-05-18T08:55:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Rumus-Lookup/</loc>
+  <lastmod>2026-05-18T08:55:17+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Pivot-Table/</loc>
+  <lastmod>2026-05-18T08:55:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Rumus-IF-AND-OR/</loc>
+  <lastmod>2026-05-18T08:55:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Rumus-IF-Tunggal-Bertingkat/</loc>
+  <lastmod>2026-05-18T08:55:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Rumus-Matematika-Lanjutan/</loc>
+  <lastmod>2026-05-18T08:55:21+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Rumus-Matematika-Dasar/</loc>
+  <lastmod>2026-05-18T08:55:16+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Rumus-Text/</loc>
+  <lastmod>2026-05-18T08:55:21+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Rumus-Filter/</loc>
+  <lastmod>2026-05-18T08:55:12+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Game-Excel-1/</loc>
+  <lastmod>2026-06-15T14:14:45+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://bayusite.github.io/Game-Excel-2/</loc>
+  <lastmod>2026-06-15T14:17:04+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+</urlset>
